@@ -19,7 +19,7 @@ my_steam_authentication_code_for_rio = os_getenv(
     "MY_STEAM_AUTHENTICATION_CODE_FOR_RIO",
     ""
 )
-event_number = 19 #20  # this is the event code for rio
+event_number = 20 #19  # this is the event code for rio
 
 tournament_url = f"https://api.steampowered.com/ICSGOTournaments_730/GetTournamentLayout/v1?key={steam_web_api_key}&event={event_number}"
 print(f"Tournament URL: \n{tournament_url}")
@@ -52,7 +52,7 @@ group_information["challengers"] = {"name": challengers_group["name"], "groupid"
 picks[challengers_group["groupid"]] = {"name": challengers_group["name"]}
 challengers_teams = challengers_group["teams"]
 print("Challenger Teams:")
-challengers_team_names = [tournament_teams_map[team["pickid"]] for team in challengers_teams]
+challengers_team_names = [tournament_teams_map.get(team["pickid"], "Teams Not Set") for team in challengers_teams]
 pprint_pprint(challengers_team_names)
 print("\n\n")
 
@@ -61,7 +61,7 @@ group_information["legends"] = {"name": legends_group["name"], "groupid": legend
 picks[legends_group["groupid"]] = {"name": legends_group["name"]}
 legends_teams = legends_group["teams"]
 print("Legend Teams:")
-legend_team_names = [tournament_teams_map[team["pickid"]] for team in legends_teams]
+legend_team_names = [tournament_teams_map.get(team["pickid"], "Teams Not Set") for team in legends_teams]
 pprint_pprint(legend_team_names)
 print("\n\n")
 
@@ -72,7 +72,7 @@ for quarters_group in quarters_groups:
     group_information["quarters"].append({"name": quarters_group["name"], "groupid": quarters_group["groupid"]})
     picks[quarters_group["groupid"]] = {"name": quarters_group["name"]}
     quarters_teams.extend(quarters_group["teams"])
-    quarter_team_names = [tournament_teams_map[team["pickid"]] for team in quarters_teams]
+    quarter_team_names = [tournament_teams_map.get(team["pickid"], "Teams Not Set") for team in quarters_teams]
 print("Quarters Teams:")
 pprint_pprint(quarter_team_names)
 print("\n\n")
@@ -84,7 +84,7 @@ for semis_group in semis_groups:
     group_information["semis"].append({"name": semis_group["name"], "groupid": semis_group["groupid"]})
     picks[semis_group["groupid"]] = {"name": semis_group["name"]}
     semis_teams.extend(semis_group["teams"])    
-    semis_team_names = [tournament_teams_map[team["pickid"]] for team in semis_teams]
+    semis_team_names = [tournament_teams_map.get(team["pickid"], "Teams Not Set") for team in semis_teams]
 print("Semis Teams:")
 pprint_pprint(semis_team_names)
 print("\n\n")
@@ -94,7 +94,7 @@ group_information["finals"] = {"name": finals_group["name"], "groupid": finals_g
 picks[finals_group["groupid"]] = {"name": finals_group["name"]}
 finals_teams = finals_group["teams"]
 print("Finals Teams:")
-finals_teams_names = [tournament_teams_map[team["pickid"]] for team in finals_teams]
+finals_teams_names = [tournament_teams_map.get(team["pickid"], "Teams Not Set") for team in finals_teams]
 pprint_pprint(finals_teams_names)
 print("\n\n")
 
